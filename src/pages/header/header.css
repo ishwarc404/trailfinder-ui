@@ -1,0 +1,37 @@
+.header
+{
+    /* border-bottom: 4px solid #FFF; */
+    overflow: hidden;
+    background-color: #ffffff;
+    position: fixed; 
+    /* Set the navbar to fixed position */
+    top: 0;
+    width: 100%; 
+    /* Full width */
+    z-index: 1000;
+    /* height: 6vh; */
+    position: fixed;
+
+    /* From https://css.glass */
+    background-color: rgba(255, 255, 255, 1);
+    /* border-radius: 16px; */
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.9px);
+    -webkit-backdrop-filter: blur(7.9px);
+    /* height: 6vh; */
+
+}
+
+.seperator-line {
+    background-color: rgba(114, 113, 113, 0.36);
+    margin-top: 1.4vw;
+    height: 0.8vw;
+    width: 0.1vh;
+}
+
+
+.trail-finder-heading {
+    font-size: 1.2vw;
+    margin: 1vw;
+    color: rgb(47, 46, 46);
+}

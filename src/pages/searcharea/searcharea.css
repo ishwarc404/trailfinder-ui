@@ -1,0 +1,32 @@
+.searcharea
+{
+    /* height: 50vh; */
+    width: 20vw;
+    background-color: rgba(255, 255, 255, 1);
+    margin: 8vw;
+    margin-left: 0vw;
+    margin-right: 5vw;
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+
+}
+
+.search-heading {
+    font-size: 1.2vw;
+    color: rgb(47, 46, 46);
+}
+
+.search-parent {
+    margin: 1vw;
+    padding-top: 1vw;
+}
+
+.distance-slider-parent {
+    margin-top: 1vw;
+}
+
+.search-button{
+    margin-top: 1vw;
+    padding-bottom: 1vw;
+}
