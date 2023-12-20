@@ -4,6 +4,7 @@ import React from "react";
 import { Slider } from "@nextui-org/react";
 import {Button} from "@nextui-org/react";
 
+import {Tabs, Tab} from "@nextui-org/react";
 
 function Searcharea() {
 
@@ -14,11 +15,15 @@ function Searcharea() {
   return (
     <div className='searcharea'>
 
-      <div className='search-parent'>
+      <Tabs aria-label="Tabs sizes">
+          <Tab key="search" title="Search"/>
+          <Tab key="simulate" title="Race Simulator"/>
+      </Tabs>
 
-        <span className='search-heading'>
+      <div className='search-parent'>
+        <div className='search-heading'>
           SEARCH
-        </span>
+        </div>
 
         <div className='distance-slider-parent'>
           <Slider
