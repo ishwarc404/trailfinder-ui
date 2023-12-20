@@ -27,3 +27,13 @@
     margin: 1vw;
     padding-bottom: 1vw;
 }
+
+.listbox-wrapper {
+    max-height: 30vh; /* Adjust the height as needed */
+    overflow-y: auto;
+    width: 20vw;
+    background-color: white;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  
