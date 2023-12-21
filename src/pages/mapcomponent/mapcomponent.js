@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import MapGL, { Source, Layer } from 'react-map-gl';
+import MapGL, { Source, Layer, Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css'; // Make sure to import default Mapbox GL styles
 
 import './mapcomponent.css'
-const MapComponent = ({ trailCoords }) => {
+const MapComponent = ({ trailCoordsArray }) => {
     
     const [viewport, setViewport] = useState({
     latitude: 40.014984,
@@ -23,26 +23,26 @@ const MapComponent = ({ trailCoords }) => {
   });
 
   useEffect(() => {
-    if (trailCoords && trailCoords.length > 0) {
+    if (trailCoordsArray && trailCoordsArray.length > 0) {
       setLineData({
         type: 'Feature',
         properties: {},
         geometry: {
           type: 'LineString',
-          coordinates: trailCoords
+          coordinates: trailCoordsArray[0]
         }
       });
 
       setViewport({
-        latitude: trailCoords[0][1],
-        longitude: trailCoords[0][0],
+        latitude: trailCoordsArray[0][0][1],
+        longitude: trailCoordsArray[0][0][0],
         zoom: 14,
         attributionControl: true,
         interactive: true
       });
 
     }
-  }, [trailCoords]);
+  }, [trailCoordsArray]);
 
 
   const layerStyle = {
@@ -57,6 +57,7 @@ const MapComponent = ({ trailCoords }) => {
   return (
    <div className='mapcomponent'>
      <MapGL
+     key={trailCoordsArray.length}
       {...viewport}
       width="100%"
       height="100vh"
@@ -66,9 +67,30 @@ const MapComponent = ({ trailCoords }) => {
       className = 'map'
     >
         
-      <Source id="my-data" type="geojson" data={lineData}>
-        <Layer {...layerStyle} />
-      </Source>
+        {trailCoordsArray ? trailCoordsArray.map((trailCoords, index) => (
+                    <React.Fragment key={index}>
+                        <Source id={`trail-${index}`} type="geojson" data={{
+                            type: 'Feature',
+                            properties: {},
+                            geometry: {
+                                type: 'LineString',
+                                coordinates: trailCoords
+                            }
+                        }}>
+                            <Layer id={`layer-${index}`} {...layerStyle} />
+                        </Source>
+                        
+                        {/* Start and End Markers */}
+                        <Marker longitude={trailCoords[0][0]} latitude={trailCoords[0][1]}>
+                            <div style={{ color: '#08FF08' }}>⬤</div>
+                        </Marker>
+                        <Marker longitude={trailCoords[trailCoords.length - 1][0]} latitude={trailCoords[trailCoords.length - 1][1]}>
+                            <div style={{ color: 'black' }}>⬤</div>
+                        </Marker>
+                    </React.Fragment>
+                )) : 
+                ''}
+
     </MapGL>
 
    </div>

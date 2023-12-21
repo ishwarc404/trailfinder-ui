@@ -29,7 +29,7 @@
 }
 
 .listbox-wrapper {
-    max-height: 30vh; /* Adjust the height as needed */
+    max-height: 35vh; /* Adjust the height as needed */
     overflow-y: auto;
     width: 20vw;
     background-color: white;

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './header/header';
 import Searcharea from './searcharea/searcharea';
 import MapComponent from './mapcomponent/mapcomponent';
 import './home.css';
 
 function Home() {
-  const [selectedTrailCoords, setSelectedTrailCoords] = useState(null);
+  const [selectedTrailCoords, setSelectedTrailCoords] = useState([]);
+
 
   return (
     <div className='home'>
@@ -16,7 +17,7 @@ function Home() {
           <Searcharea onTrailSelect={setSelectedTrailCoords} />
         </div>
         <div>
-          <MapComponent trailCoords={selectedTrailCoords} />
+          <MapComponent trailCoordsArray={selectedTrailCoords} />
         </div>
       </div>
     </div>
