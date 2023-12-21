@@ -17,7 +17,7 @@ function Home() {
           <Searcharea onTrailSelect={setSelectedTrailCoords} />
         </div>
         <div>
-          <MapComponent trailCoordsArray={selectedTrailCoords} />
+          <MapComponent trailCoords={selectedTrailCoords} />
         </div>
       </div>
     </div>

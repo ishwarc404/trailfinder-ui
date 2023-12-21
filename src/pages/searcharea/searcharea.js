@@ -17,14 +17,6 @@ function Searcharea({ onTrailSelect }) {
   const [trails, setTrails] = useState([]); // State to store the trails
   const [selectedTrail, setSelectedTrail] = useState([]);
 
-
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-
-  const selectedValue = React.useMemo(
-    () => Array.from(selectedKeys).join(", "),
-    [selectedKeys]
-  );
-
   function fetchTrails() {
     // Define the JSON object to send
     const params = {
@@ -46,30 +38,16 @@ function Searcharea({ onTrailSelect }) {
       });
   }
 
-  // function handleTrailSelect(key) {
-  //   for(let i = 0; i < trails.length ; i ++){
-  //     if(trails[i]["id"] == key){
-  //     onTrailSelect(trails[i]["coordinates"]); // Use the coordinates property
-  //   }
-  //   }
-  // }
+  function handleTrailSelect(key) {
+    console.log(key)
+    for(let i = 0; i < trails.length ; i ++){
+      if(trails[i]["id"] == key){
+      onTrailSelect(trails[i]["coordinates"]); // Use the coordinates property
+    }
+    }
+  }
   
-  useEffect(() => {
 
-    // Emit the array of coordinates whenever selectedKeys changes
-    const selectedTrailsCoordinates = Array.from(selectedKeys).map(key => {
-        const trailKey = parseInt(key, 10); // Ensure it's an integer
-        const trail = trails.find(trail => trail.id === trailKey);
-        
-        console.log(`Searching for trail with id ${trailKey}:`, trail); // Debugging
-
-        return trail ? trail.coordinates : null;
-    }).filter(coord => coord !== null);
-
-          // console.log("Selected trails coordinates:", selectedTrailsCoordinates); // Debugging
-
-          onTrailSelect(selectedTrailsCoordinates);
-      }, [selectedKeys, trails]);
 
   return (
     <div className='searcharea'>
@@ -127,11 +105,7 @@ function Searcharea({ onTrailSelect }) {
         <Listbox
           items={trails}
           aria-label="Trails"
-          // onAction={handleTrailSelect}
-
-          selectionMode="multiple"
-          selectedKeys={selectedKeys}
-          onSelectionChange={setSelectedKeys}
+          onAction={handleTrailSelect}
         >
           {(item) => (
             <ListboxItem
