@@ -11,9 +11,8 @@ function Home() {
     const [selectedTrailCoords, setSelectedTrailCoords] = useState([]);
     const [activeTab, setActiveTab] = useState("search");
 
-    const handleTabChange = (tabKey) => {
-        console.log(tabKey)
-        setActiveTab(tabKey);
+    const handleTabChange = () => {
+        setSelectedTrailCoords([]);
     };
 
     return (
@@ -23,7 +22,8 @@ function Home() {
             <div className='tabs d-flex justify-content-center'>
                 <Tabs aria-label="Tabs sizes"            
                 selectedKey={activeTab}
-            onSelectionChange={setActiveTab}>
+                onSelectionChange={setActiveTab}>
+
                     <Tab key="search" title="Search" />
                     <Tab key="simulate" title="Race Simulator" />
                 </Tabs>
@@ -31,8 +31,10 @@ function Home() {
 
             <div className='d-flex justify-content-center'>
                 <div>
-                    {activeTab === "simulate" ? <ElevationProfile /> : ''}
-                    <Searcharea onTrailSelect={setSelectedTrailCoords} />
+                    {activeTab === "simulate" ? <ElevationProfile /> : 
+                                        <Searcharea onTrailSelect={setSelectedTrailCoords} />
+                    }
+
                 </div>
                 <div>
                     <MapComponent 

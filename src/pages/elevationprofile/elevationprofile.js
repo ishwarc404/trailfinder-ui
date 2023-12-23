@@ -1,26 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Brush } from 'recharts';
 import './elevationprofile.css';
-import {Chip} from "@nextui-org/react";
+import { Chip } from "@nextui-org/react";
+import {Button, ButtonGroup} from "@nextui-org/react";
 
 const ElevationProfile = () => {
     const [data, setData] = useState([]);
     const [startDistance, setStartDistance] = useState(0);
     const [endDistance, setEndDistance] = useState(0);
     const [netDistance, setNetDistance] = useState(0);
+    const [file, setFile] = useState(null);
 
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+    };
 
-    useEffect(() => {
-        axios.get('http://127.0.0.1:5000/get-elevation-profile')
+    const handleUpload = () => {
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            axios.post('http://127.0.0.1:5000/get-elevation-profile', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
             .then(response => {
                 setData(response.data.data);
             })
             .catch(error => {
-                console.error('Error fetching elevation data', error);
+                console.error('Error uploading file', error);
             });
-    }, []);
-
+        }
+    };
     const handleBrushChange = (e) => {
         if (e && e.startIndex !== e.endIndex) {
             const startDistance = data[e.startIndex].distance;
@@ -38,7 +51,8 @@ const ElevationProfile = () => {
 
     return (
         <div className='elevationprofile'>
-            <div>
+            {data.length > 0 ? (
+                <>
                 <ResponsiveContainer width="100%" height={300}>
                     <LineChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
@@ -55,15 +69,24 @@ const ElevationProfile = () => {
                         <Brush dataKey="distance" height={20} stroke="#8884d8" onChange={handleBrushChange} tickFormatter={formatXAxis} />
                     </LineChart>
                 </ResponsiveContainer>
-            </div>
 
             <div className='distance-info'>
                 <Chip>Start: {(startDistance / 1000).toFixed(0)} km</Chip>
                 <Chip>End: {(endDistance / 1000).toFixed(0)} km</Chip>
                 <Chip>Distance: {(netDistance / 1000).toFixed(0)} km</Chip>
             </div>
+             </>
+                ) : (
+                    <div>
+                        <div className='simulate-info'>Please upload a GPX file for the race you would like to find trails for.</div>
+                        <div><input type="file" onChange={handleFileChange} /></div>
+                        <Button className='gpx-upload-button' color="success" onClick={handleUpload}>
+                            Let's go!
+                        </Button>
+                    </div>
+                )}
         </div>
-    );
-};
-
-export default ElevationProfile;
+        );
+    };
+    
+    export default ElevationProfile;
