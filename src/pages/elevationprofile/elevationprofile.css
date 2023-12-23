@@ -25,3 +25,21 @@
 .gpx-upload-button {
     margin-top: 2vw;
 }
+
+.info-chips {
+    margin-right: 0.5vw;
+    margin-top: 0.5vw;
+}
+
+.simulate-info-or {
+    font-size: 2vw;
+    margin-top: 2vw;
+}
+
+.race-selector {
+    margin: 1vw;
+}
+
+.file-uploader {
+    margin: 1vw;
+}
