@@ -1,9 +1,9 @@
 .mapcomponent
 {
     height: 70vh;
-    width: 65vw;
+    width: 50vw;
     background-color: rgba(255, 255, 255, 1);
-    margin-top: 1vw;
+    margin-top: 2vw;
     margin-left: 0vw;
     margin-right: 0vw;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);

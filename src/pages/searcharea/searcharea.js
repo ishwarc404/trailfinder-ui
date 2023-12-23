@@ -8,6 +8,7 @@ import {Button} from "@nextui-org/react";
 import {Tabs, Tab} from "@nextui-org/react";
 import {Listbox, ListboxItem} from "@nextui-org/react";
 import {ListboxWrapper} from "./ListboxWrapper";
+import ElevationProfile from '../elevationprofile/elevationprofile';
 
 
 function Searcharea({ onTrailSelect }) {
@@ -51,12 +52,7 @@ function Searcharea({ onTrailSelect }) {
 
   return (
     <div className='searcharea'>
-
-      <Tabs aria-label="Tabs sizes">
-          <Tab key="search" title="Search"/>
-          <Tab key="simulate" title="Race Simulator"/>
-      </Tabs>
-
+      {/* <ElevationProfile /> */}
       <div className='search-parent'>
         <div className='search-heading'>
           SEARCH

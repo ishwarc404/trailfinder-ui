@@ -1,5 +1,7 @@
 .searcharea {
-    margin-top: 4vw;
+    margin-top: 2vw;
+    /* margin-left: 6vw; */
+
 }
 .search-parent
 {
@@ -8,7 +10,7 @@
     margin-right: 5vw;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    margin-top: 2vw;
+    /* margin-top: 1vw; */
 
 }
 
