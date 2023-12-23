@@ -121,6 +121,7 @@ function Searcharea({ onTrailSelect }) {
         </Listbox>
       </div>
 
+      <div className="trails-found-heading">{ trails.length } trails found. Select a trail to view it's details.</div>
     </div>
   );
 }

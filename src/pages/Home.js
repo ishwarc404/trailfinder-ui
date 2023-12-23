@@ -3,6 +3,7 @@ import Header from './header/header';
 import Searcharea from './searcharea/searcharea';
 import MapComponent from './mapcomponent/mapcomponent';
 import './home.css';
+import Toolbar from './toolbar/toolbar';
 
 function Home() {
   const [selectedTrailCoords, setSelectedTrailCoords] = useState([]);
@@ -17,7 +18,10 @@ function Home() {
           <Searcharea onTrailSelect={setSelectedTrailCoords} />
         </div>
         <div>
-          <MapComponent trailCoords={selectedTrailCoords} />
+          
+            <Toolbar trailCoords={selectedTrailCoords}/>
+          
+            <MapComponent trailCoords={selectedTrailCoords}/>
         </div>
       </div>
     </div>
