@@ -15,6 +15,7 @@ function Searcharea({ onTrailSelect }) {
 
   const [distanceValue, setDistanceValue] = useState([2, 13]);
   const [elevationGainValue, setGainValue] = useState([50, 150]);
+  const [elevationLossValue, setLossValue] = useState([50, 150]);
   const [trails, setTrails] = useState([]); // State to store the trails
   const [selectedTrail, setSelectedTrail] = useState([]);
 
@@ -24,7 +25,9 @@ function Searcharea({ onTrailSelect }) {
       distance_minimum : distanceValue[0],
       distance_maximum : distanceValue[1],
       elevation_gain_minimum : elevationGainValue[0],
-      elevation_gain_maximum : elevationGainValue[1]
+      elevation_gain_maximum : elevationGainValue[1],
+      elevation_loss_minimum : elevationLossValue[0],
+      elevation_loss_maximum : elevationLossValue[1]
     };
 
     // Use a POST request if you want to send a JSON object in the request body
@@ -86,6 +89,20 @@ function Searcharea({ onTrailSelect }) {
           />
         </div>
 
+        <div className='distance-slider-parent'>
+          <Slider
+            label="Elevation Loss (meters)"
+            formatOptions={{}}
+            step={50}
+            maxValue={1000}
+            minValue={50}
+            value={elevationLossValue}
+            onChange={setLossValue}
+            color="foreground"
+            showSteps={true}
+          />
+        </div>
+
         <div  className='search-button'>
           <Button 
           color="default" 
@@ -111,7 +128,8 @@ function Searcharea({ onTrailSelect }) {
             >
               Trail: {(item.id) } &nbsp;
               Distance: {(item.distance / 1000).toFixed(1) } km
-              Elevation: {Math.round(item.elevation) }
+              Gain: {Math.round(item.elevation_gain) } &nbsp;
+              Loss: {Math.round(item.elevation_loss) }
             </ListboxItem>
           )}
         </Listbox>
