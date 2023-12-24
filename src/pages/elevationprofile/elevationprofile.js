@@ -59,14 +59,36 @@ const ElevationProfile = ({ onTrailSelect }) => {
     };
 
     function getAnalysisData () {
-        axios.get("http://127.0.0.1:5000/analyse-gpx")
-        .then(response => {
-          setGPXAnalysis(response.data);
-        })
-        .catch(error => {
-          // Handle any errors here
-          console.error('There was an error fetching the analysis', error);
-        });
+
+        if(raceValue) {
+            axios.post("http://127.0.0.1:5000/analyse-gpx", {
+                'type': 'race',
+                'race': raceValue
+            })
+            .then(response => {
+            setGPXAnalysis(response.data);
+            })
+            .catch(error => {
+            // Handle any errors here
+            console.error('There was an error fetching the analysis', error);
+            });
+        }
+
+        if(file) {
+            console.log(file)
+            axios.post("http://127.0.0.1:5000/analyse-gpx", {
+                'type': 'file',
+                'filename': file.name
+            })
+            .then(response => {
+            setGPXAnalysis(response.data);
+            })
+            .catch(error => {
+            // Handle any errors here
+            console.error('There was an error fetching the analysis', error);
+            });
+        }
+
     }
 
     const handleBrushChange = (e) => {
