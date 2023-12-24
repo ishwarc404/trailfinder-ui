@@ -16,9 +16,36 @@ const ElevationProfile = ({ onTrailSelect }) => {
     const [file, setFile] = useState(null);
     const [raceValue, setRaceValue] = useState("");
 
+    //for not analysis search
+    const [trails, setTrails] = useState([]); // State to store the trails
+
 
     const [GPXAnalysis, setGPXAnalysis] = useState([]);
     const [GPXSegmentTrails, setGPXSegmentTrails] = useState([]); // State to store the trails
+
+
+    function fetchTrails() {
+        // Define the JSON object to send
+        const params = {
+          distance_minimum : (netDistance/1000) - 200,
+          distance_maximum : (netDistance/1000) + 200,
+          elevation_gain_minimum : (elevationGain) - 200,
+          elevation_gain_maximum : (elevationGain) + 200,
+          elevation_loss_minimum : (elevationLoss) - 200,
+          elevation_loss_maximum : (elevationLoss) + 200
+        };
+    
+        // Use a POST request if you want to send a JSON object in the request body
+        axios.post("http://127.0.0.1:5000/get-trails", params)
+          .then(response => {
+            // Handle the response data (list of trails)
+            setTrails(response.data);
+        })
+          .catch(error => {
+            // Handle any errors here
+            console.error('There was an error fetching the trails', error);
+          });
+      }
 
 
     const handleFileChange = (event) => {
@@ -67,6 +94,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
             })
             .then(response => {
             setGPXAnalysis(response.data);
+            setTrails([]);
             })
             .catch(error => {
             // Handle any errors here
@@ -135,7 +163,6 @@ const ElevationProfile = ({ onTrailSelect }) => {
 
 
     function handleTrailSelect(key) {
-        console.log(key)
         for(let i = 0; i < GPXAnalysis.length ; i ++){
           if(GPXAnalysis[i]["id"] == key){
           setGPXSegmentTrails(GPXAnalysis[i]["trails"]); // Use the coordinates property
@@ -143,8 +170,8 @@ const ElevationProfile = ({ onTrailSelect }) => {
         }
       }
 
-      function handleTrailSelectaForDisplay(key) {
-        console.log(key)
+    //FOR ANALYSIS
+      function handleTrailSelectForDisplay(key) {
         for(let i = 0; i < GPXSegmentTrails.length ; i ++){
           if(GPXSegmentTrails[i]["id"] == key){
           onTrailSelect(GPXSegmentTrails[i]["coordinates"]); // Use the coordinates property
@@ -152,6 +179,14 @@ const ElevationProfile = ({ onTrailSelect }) => {
         }
       }
       
+        //FOR SEARCH
+        function handleTrailSelectForDisplaySearch(key) {
+            for(let i = 0; i < trails.length ; i ++){
+              if(trails[i]["id"] == key){
+                onTrailSelect(trails[i]["coordinates"]); // Use the coordinates property
+            }
+            }
+          }
     
     return (
         <div className='elevationprofile'>
@@ -181,7 +216,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
                         <Chip className='info-chips'> Elev Loss: {elevationLoss.toFixed(1)} m</Chip>
                     </div>
                     <div className='gpx-bt-parent'>
-                    <Button className='gpx-bt' color='primary'>
+                    <Button className='gpx-bt' color='primary' onClick={fetchTrails}>
                         Search for trails
                     </Button>
                     <Button className="gpx-bt bg-gradient-to-tr from-orange-500 to-red-500 text-white" onClick={getAnalysisData}>
@@ -189,6 +224,29 @@ const ElevationProfile = ({ onTrailSelect }) => {
                     </Button>
                     </div>
 
+                    { trails.length > 0 ? 
+                    <div className="listbox-wrapper-gpx-search">
+                        <Listbox
+                        items={trails}
+                        aria-label="Trails"
+                        onAction={handleTrailSelectForDisplaySearch}
+                        >
+                        {(item) => (
+                            <ListboxItem
+                            key={item.id}
+                            color={"default"}
+                            className={""}
+                            >
+                            Trail: {(item.id) } &nbsp;
+
+                            <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Distance: {(item.distance / 1000).toFixed(1) } km</Chip>
+                                {item.elevation_gain ? <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Gain: {Math.round(item.elevation_gain)} m</Chip>  : ""}
+                                {item.elevation_loss ? <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Loss: {Math.round(item.elevation_loss)} m</Chip>  : ""}
+                            </ListboxItem>
+                        )}
+                        </Listbox>
+                    </div>
+                    :
                     <div className='d-flex justify-content-start'>
                     <div className="listbox-wrapper-gpx-analysis">
                     <Listbox
@@ -217,7 +275,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
                         <Listbox
                         items={GPXSegmentTrails}
                         aria-label="Trails"
-                        onAction={handleTrailSelectaForDisplay}
+                        onAction={handleTrailSelectForDisplay}
                         >
                         {(item) => (
                             <ListboxItem
@@ -233,7 +291,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
                         </Listbox>
                     </div>
                     </div>
-
+}
 
 
              </>

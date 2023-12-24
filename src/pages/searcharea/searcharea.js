@@ -44,7 +44,6 @@ function Searcharea({ onTrailSelect }) {
   }
 
   function handleTrailSelect(key) {
-    console.log(key)
     for(let i = 0; i < trails.length ; i ++){
       if(trails[i]["id"] == key){
       onTrailSelect(trails[i]["coordinates"]); // Use the coordinates property
