@@ -29,12 +29,10 @@ function Home() {
                 </Tabs>
             </div>
 
+            {activeTab != "simulate" ?
             <div className='d-flex justify-content-center'>
                 <div>
-                    {activeTab === "simulate" ? <ElevationProfile /> : 
-                                        <Searcharea onTrailSelect={setSelectedTrailCoords} />
-                    }
-
+                    <Searcharea onTrailSelect={setSelectedTrailCoords} />
                 </div>
                 <div>
                     <MapComponent 
@@ -44,6 +42,20 @@ function Home() {
                     <Toolbar trailCoords={selectedTrailCoords} />
                 </div>
             </div>
+            : 
+            <div className='d-flex justify-content-around'>
+                <div>
+                     <ElevationProfile /> 
+                </div>
+                <div>
+                    <MapComponent 
+                        trailCoords={selectedTrailCoords} 
+                        className={activeTab === "simulate" ? "map-simulator" : ""}
+                    />
+                    <Toolbar trailCoords={selectedTrailCoords} />
+                </div>
+            </div>
+            }
         </div>
     );
 }

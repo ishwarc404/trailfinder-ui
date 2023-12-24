@@ -1,10 +1,10 @@
 .elevationprofile
 {
     /* height: 30vh; */
-    width: 35vw;
+    width: 50vw;
     margin-top: 2vw;
     /* margin-left: 6vw; */
-    margin-right: 5vw;
+    margin-right: 0vw;
     /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
     border-radius: 5px;
     overflow: hidden;
@@ -43,3 +43,41 @@
 .file-uploader {
     margin: 1vw;
 }
+
+
+.gpx-bt-parent {
+    margin-left: 3vw;
+    margin-top: 1vw;
+}
+
+.gpx-bt {
+    margin-right: 1vw;
+}
+
+.listbox-wrapper-gpx-analysis {
+    max-height: 25vh; /* Adjust the height as needed */
+    overflow-y: auto;
+    overflow-x: scroll;
+
+    width: 28vw;
+    background-color: white;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin-top: 1vw;
+    margin-left: 3vw;
+  }
+
+  .info-chips-gpx-analysis {
+    margin: 0.2vw;
+}
+
+.listbox-wrapper-gpx-analysis-trails {
+    max-height: 25vh; /* Adjust the height as needed */
+    overflow-y: auto;
+    width: 25vw;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin-top: 1vw;
+    margin-left: 1vw;
+  }

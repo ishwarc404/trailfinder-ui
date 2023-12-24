@@ -4,9 +4,10 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import './elevationprofile.css';
 import { Chip, Button } from "@nextui-org/react";
 import {Select, SelectSection, SelectItem} from "@nextui-org/react";
+import {Listbox, ListboxItem} from "@nextui-org/react";
 
 const ElevationProfile = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState([]); //gpx elevation data
     const [startDistance, setStartDistance] = useState(0);
     const [endDistance, setEndDistance] = useState(0);
     const [netDistance, setNetDistance] = useState(0);
@@ -14,6 +15,10 @@ const ElevationProfile = () => {
     const [elevationLoss, setElevationLoss] = useState(0);
     const [file, setFile] = useState(null);
     const [raceValue, setRaceValue] = useState("");
+
+
+    const [GPXAnalysis, setGPXAnalysis] = useState([]);
+    const [GPXSegmentTrails, setGPXSegmentTrails] = useState([]); // State to store the trails
 
 
     const handleFileChange = (event) => {
@@ -52,6 +57,17 @@ const ElevationProfile = () => {
             });
         }
     };
+
+    function getAnalysisData () {
+        axios.get("http://127.0.0.1:5000/analyse-gpx")
+        .then(response => {
+          setGPXAnalysis(response.data);
+        })
+        .catch(error => {
+          // Handle any errors here
+          console.error('There was an error fetching the analysis', error);
+        });
+    }
 
     const handleBrushChange = (e) => {
         if (e && e.startIndex !== e.endIndex) {
@@ -95,33 +111,100 @@ const ElevationProfile = () => {
         console.log(e)
       };
 
+
+    function handleTrailSelect(key) {
+        console.log(key)
+        for(let i = 0; i < GPXAnalysis.length ; i ++){
+          if(GPXAnalysis[i]["id"] == key){
+          setGPXSegmentTrails(GPXAnalysis[i]["trails"]); // Use the coordinates property
+        }
+        }
+      }
+
+
     return (
         <div className='elevationprofile'>
             {data.length > 0 ? (
                 <>
                 <ResponsiveContainer width="100%" height={300}>
-                    <LineChart data={data}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="distance" tickFormatter={formatXAxis} />
-                        <YAxis label={{ value: 'Elevation (m)', angle: -90, position: 'insideLeft' }} />
-                        <Tooltip />
-                        <Line 
-                            type="monotone" 
-                            dataKey="elevation" 
-                            stroke="#8884d8" 
-                            strokeWidth={1}
-                            dot={false} 
-                        />
-                        <Brush dataKey="distance" height={20} stroke="#8884d8" onChange={handleBrushChange} tickFormatter={formatXAxis} />
-                    </LineChart>
-                </ResponsiveContainer>
+                            <LineChart data={data}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="distance" tickFormatter={formatXAxis} />
+                                <YAxis label={{ value: 'Elevation (m)', angle: -90, position: 'insideLeft' }} />
+                                <Tooltip />
+                                <Line 
+                                    type="monotone" 
+                                    dataKey="elevation" 
+                                    stroke="#8884d8" 
+                                    strokeWidth={1}
+                                    dot={false} 
+                                />
+                                <Brush dataKey="distance" height={20} stroke="#8884d8" onChange={handleBrushChange} tickFormatter={formatXAxis} />
+                            </LineChart>
+                        </ResponsiveContainer>
 
-            <div className='distance-info'>
-                <Chip className='info-chips'>{(startDistance / 1000).toFixed(0)} km -  {(endDistance / 1000).toFixed(0)} km</Chip>
-                <Chip className='info-chips'>Distance: {(netDistance / 1000).toFixed(0)} km</Chip>
-                <Chip className='info-chips'> Elev Gain: {elevationGain.toFixed(1)} m</Chip>
-                <Chip className='info-chips'> Elev Loss: {elevationLoss.toFixed(1)} m</Chip>
-            </div>
+                    <div className='distance-info'>
+                        <Chip className='info-chips'>{(startDistance / 1000).toFixed(0)} km -  {(endDistance / 1000).toFixed(0)} km</Chip>
+                        <Chip className='info-chips'>Distance: {(netDistance / 1000).toFixed(0)} km</Chip>
+                        <Chip className='info-chips'> Elev Gain: {elevationGain.toFixed(1)} m</Chip>
+                        <Chip className='info-chips'> Elev Loss: {elevationLoss.toFixed(1)} m</Chip>
+                    </div>
+                    <div className='gpx-bt-parent'>
+                    <Button className='gpx-bt' color='primary'>
+                        Search for trails
+                    </Button>
+                    <Button className="gpx-bt bg-gradient-to-tr from-orange-500 to-red-500 text-white" onClick={getAnalysisData}>
+                        Analyse & Recommend
+                    </Button>
+                    </div>
+
+                    <div className='d-flex justify-content-start'>
+                    <div className="listbox-wrapper-gpx-analysis">
+                    <Listbox
+                        items={GPXAnalysis}
+                        aria-label="Segments"
+                        onAction={handleTrailSelect}
+                        >
+                        {(item) => (
+                            <ListboxItem
+                            key={item.id}
+                            color={"default"}
+                            className={""}
+                            >
+                            <Chip className='info-chips-gpx-analysis ' color='secondary'>{(item.type).toUpperCase() }</Chip>
+                            <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">{(item['start_distance'] / 1000).toFixed(1) } - {(item['end_distance'] / 1000).toFixed(1) } km</Chip>
+                            <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Distance: {(item['distance'] / 1000).toFixed(1) } km
+                            |
+                            D+: {(item['elevation_change']).toFixed(1) } m</Chip>
+
+                            </ListboxItem>
+                        )}
+                    </Listbox>
+                    </div>
+
+                    <div className="listbox-wrapper-gpx-analysis-trails">
+                        <Listbox
+                        items={GPXSegmentTrails}
+                        aria-label="Trails"
+                        // onAction={handleTrailSelectaForDisplay}
+                        >
+                        {(item) => (
+                            <ListboxItem
+                            key={item.id}
+                            color={"default"}
+                            className={""}
+                            >
+                            <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Distance: {(item.distance / 1000).toFixed(1) } km</Chip>
+                            {item.elevation_gain ? <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Gain: {Math.round(item.elevation_gain)} m</Chip>  : ""}
+                            {item.elevation_loss ? <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Loss: {Math.round(item.elevation_loss)} m</Chip>  : ""}
+                            </ListboxItem>
+                        )}
+                        </Listbox>
+                    </div>
+                    </div>
+
+
+
              </>
                 ) : (
                     <div>
