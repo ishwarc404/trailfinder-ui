@@ -14,6 +14,9 @@ import { Chip } from "@nextui-org/react";
 
 function Searcharea({ onTrailSelect }) {
 
+  const [loadingState, setLoading] = useState(false);
+
+
   const [distanceValue, setDistanceValue] = useState([2, 13]);
   const [elevationGainValue, setGainValue] = useState([50, 150]);
   const [elevationLossValue, setLossValue] = useState([50, 150]);
@@ -21,6 +24,7 @@ function Searcharea({ onTrailSelect }) {
   const [selectedTrail, setSelectedTrail] = useState([]);
 
   function fetchTrails() {
+    setLoading(true);
     // Define the JSON object to send
     const params = {
       distance_minimum : distanceValue[0],
@@ -36,10 +40,13 @@ function Searcharea({ onTrailSelect }) {
       .then(response => {
         // Handle the response data (list of trails)
         setTrails(response.data);
+        setLoading(false);
       })
       .catch(error => {
         // Handle any errors here
         console.error('There was an error fetching the trails', error);
+        setLoading(false);
+
       });
   }
 
@@ -108,6 +115,7 @@ function Searcharea({ onTrailSelect }) {
           color="default" 
           varient="flat"
           onClick={fetchTrails}
+          isLoading = {loadingState}
           >
           Search
            </Button> 

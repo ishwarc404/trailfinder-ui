@@ -7,6 +7,9 @@ import {Select, SelectSection, SelectItem} from "@nextui-org/react";
 import {Listbox, ListboxItem} from "@nextui-org/react";
 
 const ElevationProfile = ({ onTrailSelect }) => {
+    const [loadingState, setLoading] = useState(false);
+    const [loadingStateForAnalysis, setLoadingForAnalyssis] = useState(false);
+
     const [data, setData] = useState([]); //gpx elevation data
     const [startDistance, setStartDistance] = useState(0);
     const [endDistance, setEndDistance] = useState(0);
@@ -25,6 +28,8 @@ const ElevationProfile = ({ onTrailSelect }) => {
 
 
     function fetchTrails() {
+        setLoading(true);
+
         // Define the JSON object to send
         const params = {
           distance_minimum : (netDistance/1000) - 200,
@@ -40,10 +45,14 @@ const ElevationProfile = ({ onTrailSelect }) => {
           .then(response => {
             // Handle the response data (list of trails)
             setTrails(response.data);
+            setLoading(false);
+
         })
           .catch(error => {
             // Handle any errors here
             console.error('There was an error fetching the trails', error);
+            setLoading(false);
+
           });
       }
 
@@ -87,6 +96,8 @@ const ElevationProfile = ({ onTrailSelect }) => {
 
     function getAnalysisData () {
 
+        setLoadingForAnalyssis(true);
+
         if(raceValue) {
             axios.post("http://127.0.0.1:5000/analyse-gpx", {
                 'type': 'race',
@@ -95,6 +106,8 @@ const ElevationProfile = ({ onTrailSelect }) => {
             .then(response => {
             setGPXAnalysis(response.data);
             setTrails([]);
+            setLoadingForAnalyssis(false);
+
             })
             .catch(error => {
             // Handle any errors here
@@ -110,6 +123,8 @@ const ElevationProfile = ({ onTrailSelect }) => {
             })
             .then(response => {
             setGPXAnalysis(response.data);
+            setLoadingForAnalyssis(false);
+
             })
             .catch(error => {
             // Handle any errors here
@@ -216,10 +231,11 @@ const ElevationProfile = ({ onTrailSelect }) => {
                         <Chip className='info-chips'> Elev Loss: {elevationLoss.toFixed(1)} m</Chip>
                     </div>
                     <div className='gpx-bt-parent'>
-                    <Button className='gpx-bt' color='primary' onClick={fetchTrails}>
+                    <Button className='gpx-bt' color='primary' onClick={fetchTrails} isLoading={loadingState}>
                         Search for trails
                     </Button>
-                    <Button className="gpx-bt bg-gradient-to-tr from-orange-500 to-red-500 text-white" onClick={getAnalysisData}>
+                    <Button className="gpx-bt bg-gradient-to-tr from-orange-500 to-red-500 text-white" 
+                    onClick={getAnalysisData} isLoading={loadingStateForAnalysis}>
                         Analyse & Recommend
                     </Button>
                     </div>
@@ -296,7 +312,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
 
              </>
                 ) : (
-                    <div>
+                    <div className='simulator-landing'>
                         <div className='simulate-info'>Please upload a GPX file for the race you would like to find trails for.</div>
                         <div className='file-uploader'><input type="file" onChange={handleFileChange} /></div>
                         <div className='simulate-info-or'>Or, you can also choose from one of these popular races.</div>

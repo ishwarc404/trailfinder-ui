@@ -43,7 +43,7 @@ function Home() {
                 </div>
             </div>
             : 
-            <div className='d-flex justify-content-around'>
+            <div className='d-flex justify-content-center'>
                 <div>
                      <ElevationProfile  onTrailSelect={setSelectedTrailCoords} /> 
                 </div>
