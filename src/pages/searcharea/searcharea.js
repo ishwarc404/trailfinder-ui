@@ -9,6 +9,7 @@ import {Tabs, Tab} from "@nextui-org/react";
 import {Listbox, ListboxItem} from "@nextui-org/react";
 import {ListboxWrapper} from "./ListboxWrapper";
 import ElevationProfile from '../elevationprofile/elevationprofile';
+import { Chip } from "@nextui-org/react";
 
 
 function Searcharea({ onTrailSelect }) {
@@ -127,9 +128,13 @@ function Searcharea({ onTrailSelect }) {
               className={""}
             >
               Trail: {(item.id) } &nbsp;
-              Distance: {(item.distance / 1000).toFixed(1) } km
+              {/* Distance: {(item.distance / 1000).toFixed(1) } km
               Gain: {Math.round(item.elevation_gain) } &nbsp;
-              Loss: {Math.round(item.elevation_loss) }
+              Loss: {Math.round(item.elevation_loss) } */}
+
+              <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Distance: {(item.distance / 1000).toFixed(1) } km</Chip>
+                {item.elevation_gain ? <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Gain: {Math.round(item.elevation_gain)} m</Chip>  : ""}
+                {item.elevation_loss ? <Chip className='info-chips-gpx-analysis ' color='secondary' variant="bordered">Loss: {Math.round(item.elevation_loss)} m</Chip>  : ""}
             </ListboxItem>
           )}
         </Listbox>

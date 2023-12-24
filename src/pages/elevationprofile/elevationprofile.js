@@ -6,7 +6,7 @@ import { Chip, Button } from "@nextui-org/react";
 import {Select, SelectSection, SelectItem} from "@nextui-org/react";
 import {Listbox, ListboxItem} from "@nextui-org/react";
 
-const ElevationProfile = () => {
+const ElevationProfile = ({ onTrailSelect }) => {
     const [data, setData] = useState([]); //gpx elevation data
     const [startDistance, setStartDistance] = useState(0);
     const [endDistance, setEndDistance] = useState(0);
@@ -121,7 +121,16 @@ const ElevationProfile = () => {
         }
       }
 
-
+      function handleTrailSelectaForDisplay(key) {
+        console.log(key)
+        for(let i = 0; i < GPXSegmentTrails.length ; i ++){
+          if(GPXSegmentTrails[i]["id"] == key){
+          onTrailSelect(GPXSegmentTrails[i]["coordinates"]); // Use the coordinates property
+        }
+        }
+      }
+      
+    
     return (
         <div className='elevationprofile'>
             {data.length > 0 ? (
@@ -186,7 +195,7 @@ const ElevationProfile = () => {
                         <Listbox
                         items={GPXSegmentTrails}
                         aria-label="Trails"
-                        // onAction={handleTrailSelectaForDisplay}
+                        onAction={handleTrailSelectaForDisplay}
                         >
                         {(item) => (
                             <ListboxItem
