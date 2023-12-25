@@ -62,6 +62,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
     };
 
     const handleUpload = () => {
+        setLoading(true);
         if (file) {
             const formData = new FormData();
             formData.append('file', file);
@@ -73,6 +74,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
             })
             .then(response => {
                 setData(response.data.data);
+                setLoading(false);
                 setEndDistance(response.data.data[response.data.data.length-1]['distance'])
             })
             .catch(error => {
@@ -86,6 +88,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
             })
             .then(response => {
                 setData(response.data.data);
+                setLoading(false);
                 setEndDistance(response.data.data[response.data.data.length-1]['distance'])
             })
             .catch(error => {
@@ -331,7 +334,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
                         </Select>
                         </div>
                         <div className='race-selector'>
-                        <Button className='gpx-upload-button' color="success" onClick={handleUpload}>
+                        <Button className='gpx-upload-button' color="success" onClick={handleUpload} isLoading={loadingState}>
                             Let's go!
                         </Button>
                         </div>

@@ -35,3 +35,19 @@
     margin: 1vw;
     color: rgb(47, 46, 46);
 }
+
+
+@media screen and (max-width: 850px) {
+    .trail-finder-heading {
+        font-size: 3vw;
+        margin: 1vw;
+        color: rgb(47, 46, 46);
+    }
+    
+    .seperator-line {
+        background-color: rgba(114, 113, 113, 0.36);
+        margin-top: 1.4vw;
+        height: 4vw;
+        width: 0.1vh;
+    }
+}
