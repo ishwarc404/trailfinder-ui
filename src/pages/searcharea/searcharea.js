@@ -36,7 +36,7 @@ function Searcharea({ onTrailSelect }) {
     };
 
     // Use a POST request if you want to send a JSON object in the request body
-    axios.post("http://127.0.0.1:5000/get-trails", params)
+    axios.post("https://trailfinder.fly.dev/get-trails", params)
       .then(response => {
         // Handle the response data (list of trails)
         setTrails(response.data);

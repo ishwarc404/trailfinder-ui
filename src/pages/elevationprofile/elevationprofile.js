@@ -41,7 +41,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
         };
     
         // Use a POST request if you want to send a JSON object in the request body
-        axios.post("http://127.0.0.1:5000/get-trails", params)
+        axios.post("https://trailfinder.fly.dev/get-trails", params)
           .then(response => {
             // Handle the response data (list of trails)
             setTrails(response.data);
@@ -66,7 +66,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
             const formData = new FormData();
             formData.append('file', file);
 
-            axios.post('http://127.0.0.1:5000/get-elevation-profile', formData, {
+            axios.post('https://trailfinder.fly.dev/get-elevation-profile', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -81,7 +81,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
         }
 
         if(raceValue) {
-            axios.post('http://127.0.0.1:5000/get-elevation-profile', {
+            axios.post('https://trailfinder.fly.dev/get-elevation-profile', {
                 'race': raceValue
             })
             .then(response => {
@@ -99,7 +99,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
         setLoadingForAnalyssis(true);
 
         if(raceValue) {
-            axios.post("http://127.0.0.1:5000/analyse-gpx", {
+            axios.post("https://trailfinder.fly.dev/analyse-gpx", {
                 'type': 'race',
                 'race': raceValue
             })
@@ -117,7 +117,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
 
         if(file) {
             console.log(file)
-            axios.post("http://127.0.0.1:5000/analyse-gpx", {
+            axios.post("https://trailfinder.fly.dev/analyse-gpx", {
                 'type': 'file',
                 'filename': file.name
             })

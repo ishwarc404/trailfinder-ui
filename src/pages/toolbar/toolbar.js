@@ -11,7 +11,7 @@ function Toolbar({ trailCoords }) {
             coordinates: trailCoords
         };
 
-        axios.post("http://127.0.0.1:5000/get-gpx", params, {
+        axios.post("https://trailfinder.fly.dev/get-gpx", params, {
             responseType: 'blob'
         })
         .then(response => {
