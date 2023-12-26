@@ -119,7 +119,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
         }
 
         if(file) {
-            console.log(file)
+            // console.log(file)
             axios.post("https://trailfinder.fly.dev/analyse-gpx", {
                 'type': 'file',
                 'filename': file.name
@@ -176,7 +176,7 @@ const ElevationProfile = ({ onTrailSelect }) => {
 
      const handleRaceSelectionChange = (e) => {
         setRaceValue(e.target.value);
-        console.log(e)
+        // console.log(e)
       };
 
 
