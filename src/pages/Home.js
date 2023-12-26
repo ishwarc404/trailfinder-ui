@@ -30,6 +30,7 @@ function Home() {
             <Header />
             <br />
             <div className='tabs d-flex justify-content-center'>
+                
                 <Tabs aria-label="Tabs sizes"            
                 selectedKey={activeTab}
                 onSelectionChange={setActiveTab}>

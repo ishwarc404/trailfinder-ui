@@ -241,6 +241,13 @@ const ElevationProfile = ({ onTrailSelect }) => {
                     onClick={getAnalysisData} isLoading={loadingStateForAnalysis}>
                         Analyse & Recommend
                     </Button>
+                    <Button className='gpx-bt' color='secondary' variant="bordered" onClick={
+                        ()=>{
+                            setData([])
+                        }
+                    }>
+                        Try a different race
+                    </Button>
                     </div>
 
                     { trails.length > 0 ? 
