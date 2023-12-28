@@ -22,6 +22,10 @@ const ElevationProfile = ({ onTrailSelect }) => {
     //for not analysis search
     const [trails, setTrails] = useState([]); // State to store the trails
 
+    const [selectedSegment, setSelectedSegment] = useState('');
+    const [selectedTrail, setSelectedTrail] = useState('');
+
+
 
     const [GPXAnalysis, setGPXAnalysis] = useState([]);
     const [GPXSegmentTrails, setGPXSegmentTrails] = useState([]); // State to store the trails
@@ -256,6 +260,9 @@ const ElevationProfile = ({ onTrailSelect }) => {
                         items={trails}
                         aria-label="Trails"
                         onAction={handleTrailSelectForDisplaySearch}
+                        selectionMode="single"
+                        selectedKeys={selectedTrail}
+                        onSelectionChange={setSelectedTrail}
                         >
                         {(item) => (
                             <ListboxItem
@@ -279,6 +286,9 @@ const ElevationProfile = ({ onTrailSelect }) => {
                         items={GPXAnalysis}
                         aria-label="Segments"
                         onAction={handleTrailSelect}
+                        selectionMode="single"
+                        selectedKeys={selectedSegment}
+                        onSelectionChange={setSelectedSegment}
                         >
                         {(item) => (
                             <ListboxItem
@@ -302,6 +312,9 @@ const ElevationProfile = ({ onTrailSelect }) => {
                         items={GPXSegmentTrails}
                         aria-label="Trails"
                         onAction={handleTrailSelectForDisplay}
+                        selectionMode="single"
+                        selectedKeys={selectedTrail}
+                        onSelectionChange={setSelectedTrail}
                         >
                         {(item) => (
                             <ListboxItem

@@ -21,7 +21,7 @@ function Searcharea({ onTrailSelect }) {
   const [elevationGainValue, setGainValue] = useState([50, 150]);
   const [elevationLossValue, setLossValue] = useState([50, 150]);
   const [trails, setTrails] = useState([]); // State to store the trails
-  const [selectedTrail, setSelectedTrail] = useState([]);
+  const [selectedTrail, setSelectedTrail] = useState('');
 
   function fetchTrails() {
     setLoading(true);
@@ -127,6 +127,9 @@ function Searcharea({ onTrailSelect }) {
           items={trails}
           aria-label="Trails"
           onAction={handleTrailSelect}
+          selectionMode="single"
+          selectedKeys={selectedTrail}
+          onSelectionChange={setSelectedTrail}
         >
           {(item) => (
             <ListboxItem
