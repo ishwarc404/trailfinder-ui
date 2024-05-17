@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/trailfinder-ui/static/css/main.33f68067.css",
-    "main.js": "/trailfinder-ui/static/js/main.4c6bea08.js",
-    "static/js/483.46e3decb.chunk.js": "/trailfinder-ui/static/js/483.46e3decb.chunk.js",
+    "main.js": "/trailfinder-ui/static/js/main.8086a1ad.js",
+    "static/js/483.2189f725.chunk.js": "/trailfinder-ui/static/js/483.2189f725.chunk.js",
     "static/js/787.a17248d6.chunk.js": "/trailfinder-ui/static/js/787.a17248d6.chunk.js",
     "index.html": "/trailfinder-ui/index.html",
     "main.33f68067.css.map": "/trailfinder-ui/static/css/main.33f68067.css.map",
-    "main.4c6bea08.js.map": "/trailfinder-ui/static/js/main.4c6bea08.js.map",
-    "483.46e3decb.chunk.js.map": "/trailfinder-ui/static/js/483.46e3decb.chunk.js.map",
+    "main.8086a1ad.js.map": "/trailfinder-ui/static/js/main.8086a1ad.js.map",
+    "483.2189f725.chunk.js.map": "/trailfinder-ui/static/js/483.2189f725.chunk.js.map",
     "787.a17248d6.chunk.js.map": "/trailfinder-ui/static/js/787.a17248d6.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.33f68067.css",
-    "static/js/main.4c6bea08.js"
+    "static/js/main.8086a1ad.js"
   ]
 }
