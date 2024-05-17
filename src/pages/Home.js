@@ -27,46 +27,8 @@ function Home() {
 
     return (
         <div className='home'>
-            <Header />
-            <br />
-            <div className='tabs d-flex justify-content-center'>
-                
-                <Tabs aria-label="Tabs sizes"            
-                selectedKey={activeTab}
-                onSelectionChange={setActiveTab}>
-
-                    <Tab key="search" title="Search" />
-                    <Tab key="simulate" title="Race Simulator" />
-                </Tabs>
-            </div>
-
-            {activeTab != "simulate" ?
-            <div className='d-flex justify-content-center'>
-                <div>
-                    <Searcharea onTrailSelect={setSelectedTrailCoords} />
-                </div>
-                <div>
-                    <MapComponent 
-                        trailCoords={selectedTrailCoords} 
-                        className={activeTab === "simulate" ? "map-simulator" : ""}
+              <MapComponent 
                     />
-                    <Toolbar trailCoords={selectedTrailCoords} />
-                </div>
-            </div>
-            : 
-            <div className='d-flex justify-content-center'>
-                <div>
-                     <ElevationProfile  onTrailSelect={setSelectedTrailCoords} /> 
-                </div>
-                <div>
-                    <MapComponent 
-                        trailCoords={selectedTrailCoords} 
-                        className={activeTab === "simulate" ? "map-simulator" : ""}
-                    />
-                    <Toolbar trailCoords={selectedTrailCoords} />
-                </div>
-            </div>
-            }
         </div>
     );
 }
